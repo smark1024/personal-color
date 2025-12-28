@@ -281,7 +281,11 @@
             width: 100%;
             max-width: 280px;
             height: 44px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+            background: linear-gradient(
+                135deg,
+                rgba(255, 255, 255, 0.95) 0%,
+                rgba(255, 255, 255, 0.85) 100%
+            );
             backdrop-filter: blur(8px);
             border: 1px solid rgba(236, 72, 153, 0.2);
             color: $color-primary;
@@ -290,7 +294,11 @@
             font-weight: 600;
 
             &:hover:not(:disabled) {
-                background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+                background: linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 1) 0%,
+                    rgba(255, 255, 255, 0.95) 100%
+                );
                 border-color: rgba(236, 72, 153, 0.4);
                 box-shadow: 0 6px 16px rgba(236, 72, 153, 0.15);
                 transform: translateY(-1px);
@@ -343,7 +351,7 @@
             transform: scale(1.15);
 
             &::after {
-                content: '✓';
+                content: "✓";
                 position: absolute;
                 inset: 0;
                 @include flex-center;

@@ -64,4 +64,3 @@
 @mixin transition($property: all, $duration: 0.3s) {
     transition: $property $duration ease-in-out;
 }
-
