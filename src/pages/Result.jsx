@@ -26,7 +26,7 @@ const Result = memo(() => {
 
     useEffect(() => {
         if (!location.state?.image) {
-            navigate("/");
+            navigate("/", { replace: true });
             return;
         }
 
@@ -71,6 +71,12 @@ const Result = memo(() => {
         };
 
         processImage();
+
+        // 컴포넌트 언마운트 시 브라우저 히스토리의 state 정리
+        return () => {
+            // 현재 히스토리를 state 없이 교체
+            window.history.replaceState({}, document.title);
+        };
     }, [location.state, navigate]);
 
     // 컬러 변경 핸들러
@@ -158,13 +164,25 @@ const Result = memo(() => {
                 </div>
 
                 {/* 타이틀 정보 (이미지 아래) */}
-                <div className="result__title-section">
-                    <h2 className="result__title">
-                        당신의 퍼스널 컬러는
-                        <br />
-                        <span className="result__title-highlight">{result.name}</span>
-                    </h2>
-                </div>
+                {!isProcessing && (
+                    <div className="result__title-section">
+                        {faceDetectionFailed ? (
+                            <h2 className="result__title">
+                                얼굴 인식 실패
+                                <br />
+                                <span className="result__title-highlight result__title-highlight--error">
+                                    사진을 다시 등록해주세요
+                                </span>
+                            </h2>
+                        ) : (
+                            <h2 className="result__title">
+                                당신의 퍼스널 컬러는
+                                <br />
+                                <span className="result__title-highlight">{result.name}</span>
+                            </h2>
+                        )}
+                    </div>
+                )}
             </div>
 
             {/* 콘텐츠 영역 */}
@@ -187,7 +205,7 @@ const Result = memo(() => {
                                     </p>
                                     <button
                                         className="result__alert-button"
-                                        onClick={() => navigate("/upload")}
+                                        onClick={() => navigate("/upload", { replace: true })}
                                     >
                                         <Camera size={18} />
                                         사진 다시 등록하기
@@ -262,7 +280,7 @@ const Result = memo(() => {
                                 <div className="result__actions">
                                     <button
                                         className="result__retry-button"
-                                        onClick={() => navigate("/")}
+                                        onClick={() => navigate("/", { replace: true })}
                                     >
                                         <RotateCcw size={20} />
                                         다시 진단하기

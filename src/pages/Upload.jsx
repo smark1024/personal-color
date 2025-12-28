@@ -1,14 +1,6 @@
 import React, { useState, useRef, memo, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    Upload as UploadIcon,
-    X,
-    ChevronLeft,
-    Loader2,
-    Camera,
-    Palette,
-    AlertCircle,
-} from "lucide-react";
+import { Upload as UploadIcon, X, ChevronLeft, Camera, Palette, AlertCircle } from "lucide-react";
 import "./Upload.scss";
 
 const Upload = memo(() => {

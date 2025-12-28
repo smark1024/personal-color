@@ -163,6 +163,13 @@
         font-size: 32px;
         font-weight: bold;
         margin-top: $spacing-xs;
+
+        &--error {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            font-size: 24px;
+        }
     }
 
     // 콘텐츠 영역
