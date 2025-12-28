@@ -1,0 +1,49 @@
+// Colors
+$color-primary: #ec4899;
+$color-secondary: #a855f7;
+$color-background: #ffffff;
+$color-surface: #f9fafb;
+$color-text-primary: #111827;
+$color-text-secondary: #6b7280;
+$color-border: #e5e7eb;
+
+// Personal Color Theme Colors
+$color-spring-warm: linear-gradient(135deg, #fef3c7, #fde68a);
+$color-summer-cool: linear-gradient(135deg, #dbeafe, #bfdbfe);
+$color-autumn-warm: linear-gradient(135deg, #fed7aa, #fdba74);
+$color-winter-cool: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+
+// Spacing (px 단위)
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// Breakpoints
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+// Z-index
+$z-index-base: 1;
+$z-index-header: 10;
+$z-index-modal: 20;
+$z-index-overlay: 50;
+$z-index-toast: 100;
+
+// Border Radius
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+$radius-xl: 24px;
+$radius-full: 9999px;
+
+// Shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+$shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+$shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+

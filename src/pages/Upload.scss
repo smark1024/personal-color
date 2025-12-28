@@ -1,0 +1,457 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.upload {
+    height: 100%;
+    @include flex-column;
+    background-color: $color-background;
+    position: relative;
+
+    // 전체 화면 로딩 오버레이
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: $z-index-overlay;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.2s ease-in-out;
+    }
+
+    &__spinner {
+        position: relative;
+        width: 64px;
+        height: 64px;
+        @include flex-center;
+    }
+
+    &__spinner-ring {
+        width: 64px;
+        height: 64px;
+        border: 4px solid #fce7f3;
+        border-top-color: $color-primary;
+        border-radius: $radius-full;
+        animation: spin 1s linear infinite;
+    }
+
+    &__spinner-icon {
+        position: absolute;
+        color: $color-primary;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    &__overlay-title {
+        margin-top: $spacing-md;
+        color: $color-text-secondary;
+        font-weight: 500;
+    }
+
+    &__overlay-subtitle {
+        font-size: 12px;
+        color: #9ca3af;
+        margin-top: $spacing-xs;
+    }
+
+    // 헤더
+    &__header {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        padding: 0 $spacing-md;
+        border-bottom: 1px solid $color-border;
+        flex-shrink: 0;
+    }
+
+    &__back-button {
+        @include button-reset;
+        padding: $spacing-sm;
+        margin-left: -$spacing-sm;
+        border-radius: $radius-full;
+        @include transition(background-color);
+
+        &:hover {
+            background-color: $color-surface;
+        }
+    }
+
+    &__title {
+        margin-left: $spacing-sm;
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    // 콘텐츠 영역
+    &__content {
+        flex: 1;
+        padding: $spacing-lg;
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+        min-height: 0;
+    }
+
+    &__preview-area {
+        width: 100%;
+        max-width: 360px;
+        @include flex-center;
+        margin-bottom: $spacing-lg;
+    }
+
+    // 이미지 미리보기
+    &__preview {
+        position: relative;
+        width: 100%;
+        max-width: 280px;
+        aspect-ratio: 3/4;
+        border-radius: $radius-xl;
+        overflow: hidden;
+        box-shadow: $shadow-lg;
+        background-color: $color-surface;
+    }
+
+    &__preview-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &__delete-button {
+        @include button-reset;
+        position: absolute;
+        top: $spacing-md;
+        right: $spacing-md;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: $color-background;
+        padding: $spacing-sm;
+        border-radius: $radius-full;
+        backdrop-filter: blur(8px);
+        @include transition(background-color);
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    }
+
+    // 드롭존
+    &__dropzone {
+        width: 100%;
+        max-width: 320px;
+        @include flex-column;
+        align-items: center;
+        padding: $spacing-xl $spacing-lg;
+        border: 2px dashed #d1d5db;
+        border-radius: $radius-xl;
+        background-color: $color-surface;
+        @include transition(all);
+
+        &:hover {
+            border-color: $color-primary;
+            background-color: #fdf2f8;
+        }
+    }
+
+    // 버튼 그룹
+    &__button-group {
+        display: flex;
+        gap: $spacing-md;
+        margin-top: $spacing-lg;
+        width: 100%;
+    }
+
+    &__select-button,
+    &__camera-button {
+        @include button-reset;
+        flex: 1;
+        padding: $spacing-md $spacing-sm;
+        border-radius: $radius-lg;
+        font-weight: 600;
+        font-size: 14px;
+        @include flex-column;
+        align-items: center;
+        gap: $spacing-xs;
+        @include transition(all);
+
+        svg {
+            flex-shrink: 0;
+        }
+
+        span {
+            white-space: nowrap;
+        }
+    }
+
+    &__select-button {
+        background-color: $color-primary;
+        color: white;
+
+        &:hover {
+            background-color: #db2777;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    &__camera-button {
+        background-color: white;
+        color: $color-primary;
+        border: 2px solid $color-primary;
+
+        &:hover {
+            background-color: #fdf2f8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    // 드롭 힌트
+    &__drop-hint {
+        margin-top: $spacing-lg;
+        font-size: 12px;
+        color: $color-text-secondary;
+        text-align: center;
+    }
+
+    &__icon-wrapper {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        border-radius: $radius-full;
+        color: white;
+        @include flex-center;
+        margin-bottom: $spacing-lg;
+        box-shadow: 0 4px 20px rgba(236, 72, 153, 0.25);
+    }
+
+    &__dropzone-title {
+        color: $color-text-primary;
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: $spacing-xs;
+    }
+
+    &__dropzone-subtitle {
+        color: $color-text-secondary;
+        font-size: 13px;
+        text-align: center;
+        line-height: 1.5;
+    }
+
+    &__file-input {
+        display: none;
+    }
+
+    // 액션 영역
+    &__actions {
+        width: 100%;
+        max-width: 320px;
+        flex-shrink: 0;
+    }
+
+    &__tip {
+        font-size: 12px;
+        color: #9ca3af;
+        text-align: center;
+        margin-bottom: $spacing-md;
+    }
+
+    // 분석하기 버튼
+    &__analyze-button {
+        @include button-reset;
+        width: 100%;
+        height: 56px;
+        background-color: $color-primary;
+        color: $color-background;
+        border-radius: $radius-xl;
+        font-weight: bold;
+        font-size: 18px;
+        @include flex-center;
+        gap: $spacing-sm;
+        box-shadow: $shadow-lg;
+        @include transition(all);
+
+        &:hover:not(&--disabled) {
+            transform: scale(1.02);
+            background-color: #db2777;
+        }
+
+        &:active:not(&--disabled) {
+            transform: scale(0.95);
+        }
+
+        &--disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+// 카메라 모달 (데스크톱 웹캠)
+.upload__camera-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    @include flex-center;
+    z-index: $z-index-modal;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.upload__camera-container {
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: $radius-xl;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.upload__camera-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg;
+    border-bottom: 1px solid $color-border;
+}
+
+.upload__camera-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-text-primary;
+}
+
+.upload__camera-close {
+    @include button-reset;
+    padding: $spacing-xs;
+    color: $color-text-secondary;
+    @include transition(color);
+
+    &:hover {
+        color: $color-text-primary;
+    }
+}
+
+.upload__camera-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.upload__camera-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.upload__camera-error {
+    width: 100%;
+    height: 100%;
+    @include flex-column;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-xl;
+    background-color: $color-surface;
+    color: $color-text-secondary;
+    text-align: center;
+    gap: $spacing-md;
+}
+
+.upload__camera-error-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $color-text-primary;
+    margin-top: $spacing-md;
+}
+
+.upload__camera-error-message {
+    font-size: 14px;
+    line-height: 1.6;
+    color: $color-text-secondary;
+}
+
+.upload__camera-fallback-button {
+    @include button-reset;
+    margin-top: $spacing-md;
+    padding: $spacing-md $spacing-lg;
+    background-color: $color-primary;
+    color: white;
+    border-radius: $radius-full;
+    font-weight: 600;
+    font-size: 14px;
+    @include flex-center;
+    gap: $spacing-sm;
+    @include transition(all);
+
+    &:hover {
+        background-color: #db2777;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.upload__camera-actions {
+    padding: $spacing-lg;
+    @include flex-center;
+}
+
+.upload__capture-button {
+    @include button-reset;
+    padding: $spacing-md $spacing-xl;
+    background-color: $color-primary;
+    color: white;
+    border-radius: $radius-full;
+    font-weight: 600;
+    font-size: 16px;
+    @include flex-center;
+    gap: $spacing-sm;
+    @include transition(all);
+
+    &:hover {
+        background-color: #db2777;
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+}
+

@@ -1,0 +1,177 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.home {
+    height: 100%;
+    position: relative;
+    background: linear-gradient(135deg, #fdf2f8 0%, #ffffff 50%, #eff6ff 100%);
+    overflow: hidden;
+    @include flex-column;
+
+    // Blob 애니메이션
+    &__blob {
+        position: absolute;
+        border-radius: $radius-full;
+        mix-blend-mode: multiply;
+        filter: blur(64px);
+        opacity: 0.3;
+
+        &--1 {
+            top: -10%;
+            right: -10%;
+            width: 256px;
+            height: 256px;
+            background-color: #fbcfe8;
+        }
+
+        &--2 {
+            top: 20%;
+            left: -10%;
+            width: 288px;
+            height: 288px;
+            background-color: #e9d5ff;
+        }
+
+        &--3 {
+            bottom: 10%;
+            right: 20%;
+            width: 256px;
+            height: 256px;
+            background-color: #fef3c7;
+        }
+    }
+
+    // 콘텐츠 영역 (중앙)
+    &__content {
+        position: relative;
+        flex: 1;
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 $spacing-xl;
+        z-index: $z-index-base;
+    }
+
+    // 아이콘 래퍼
+    &__icon-wrapper {
+        width: 80px;
+        height: 80px;
+        background-color: $color-background;
+        border-radius: $radius-md;
+        box-shadow: $shadow-xl;
+        @include flex-center;
+        margin-bottom: $spacing-lg;
+        transform: rotate(3deg);
+    }
+
+    &__icon {
+        color: $color-primary;
+    }
+
+    // 배지
+    &__badge {
+        @include flex-center;
+        gap: $spacing-sm;
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(8px);
+        padding: 6px $spacing-md;
+        border-radius: $radius-full;
+        color: $color-text-secondary;
+        font-size: 12px;
+        font-weight: 500;
+        margin-bottom: $spacing-md;
+        box-shadow: $shadow-sm;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    &__badge-icon {
+        color: #eab308;
+    }
+
+    // 제목
+    &__title {
+        font-size: 36px;
+        font-weight: bold;
+        color: $color-text-primary;
+        line-height: 1.3;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    &__title-highlight {
+        background: linear-gradient(to right, $color-primary, $color-secondary);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    // 설명
+    &__description {
+        color: $color-text-secondary;
+        font-size: 14px;
+        text-align: center;
+        line-height: 1.6;
+        max-width: 240px;
+        margin-bottom: $spacing-xl;
+    }
+
+    // 버튼
+    &__button {
+        @include button-reset;
+        width: 100%;
+        max-width: 320px;
+        height: 56px;
+        background-color: #111827;
+        color: $color-background;
+        border-radius: $radius-xl;
+        font-weight: bold;
+        font-size: 18px;
+        @include flex-center;
+        gap: 12px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        @include transition(transform);
+
+        &:hover {
+            transform: scale(1.02);
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    &__button-icon-wrapper {
+        padding: $spacing-sm;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: $radius-full;
+        @include flex-center;
+        @include transition(background-color);
+
+        .home__button:hover & {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    &__button-arrow {
+        opacity: 0.5;
+        @include transition(transform);
+
+        .home__button:hover & {
+            transform: translateX(4px);
+        }
+    }
+
+    // 안내 문구 (하단 고정)
+    &__notice {
+        position: relative;
+        flex-shrink: 0;
+        z-index: $z-index-base;
+        padding: $spacing-md $spacing-lg;
+        padding-bottom: $spacing-xl;
+        font-size: 11px;
+        color: #9ca3af;
+        text-align: center;
+        background: linear-gradient(to top, rgba(255, 255, 255, 0.9) 0%, transparent 100%);
+    }
+}
+

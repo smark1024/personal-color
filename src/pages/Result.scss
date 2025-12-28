@@ -1,0 +1,434 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.result {
+    height: 100%;
+    @include flex-column;
+    overflow-y: auto;
+
+    // 로딩 상태
+    &__loading {
+        height: 100%;
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-background;
+    }
+
+    &__loading-spinner {
+        width: 48px;
+        height: 48px;
+        border: 2px solid #fce7f3;
+        border-top-color: $color-primary;
+        border-radius: $radius-full;
+        animation: spin 1s linear infinite;
+        margin-bottom: $spacing-md;
+    }
+
+    &__loading-text {
+        color: $color-text-secondary;
+    }
+
+    // 히어로 영역 (이미지 + 타이틀)
+    &__hero {
+        position: relative;
+        flex-shrink: 0;
+        @include flex-column;
+        align-items: center;
+        padding: $spacing-lg;
+        padding-top: $spacing-xl;
+    }
+
+    &__image-container {
+        position: relative;
+        width: 100%;
+        max-width: 280px;
+        @include flex-column;
+        align-items: center;
+    }
+
+    &__image-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3/4;
+        border-radius: $radius-xl;
+        overflow: hidden;
+        box-shadow: $shadow-lg;
+        margin-bottom: $spacing-md;
+    }
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    // 처리 중 오버레이
+    &__processing {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__processing-overlay {
+        position: absolute;
+        inset: 0;
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(4px);
+        color: $color-background;
+        gap: $spacing-sm;
+        font-size: 12px;
+        z-index: 10;
+    }
+
+    &__processing-spinner {
+        width: 32px;
+        height: 32px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-top-color: #fbbf24;
+        border-radius: $radius-full;
+    }
+
+    // 이미지 하단 컬러 하모니 바
+    &__color-harmony {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex;
+        opacity: 0.95;
+    }
+
+    &__color-bar {
+        flex: 1;
+        transition: flex 0.3s ease;
+
+        &:hover {
+            flex: 1.5;
+        }
+    }
+
+    // 오버레이 정보
+    &__overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: $spacing-lg;
+        text-align: center;
+        // 검은 배경 제거 (컬러 오버레이와 겹치지 않도록)
+    }
+
+    &__badge {
+        display: inline-block;
+        background-color: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(12px);
+        color: $color-background;
+        font-size: 11px;
+        font-weight: bold;
+        padding: 4px $spacing-sm;
+        border-radius: $radius-full;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        margin-bottom: $spacing-sm;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    // 타이틀 섹션
+    &__title-section {
+        width: 100%;
+        max-width: 320px;
+        padding: $spacing-md 0 0 0;
+        text-align: center;
+    }
+
+    &__title {
+        color: $color-text-secondary;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.5;
+        margin-bottom: $spacing-xs;
+    }
+
+    &__title-highlight {
+        display: block;
+        background: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-size: 32px;
+        font-weight: bold;
+        margin-top: $spacing-xs;
+    }
+
+    // 콘텐츠 영역
+    &__content {
+        flex: 1;
+        background-color: $color-background;
+        padding: $spacing-xs $spacing-lg $spacing-lg;
+        @include flex-column;
+    }
+
+    // 얼굴 검출 실패 알림
+    &__alert {
+        background-color: #fef3c7;
+        border: 2px solid #fbbf24;
+        border-radius: $radius-xl;
+        padding: $spacing-lg;
+        margin-bottom: $spacing-xl;
+        @include flex-center;
+        gap: $spacing-md;
+        align-items: flex-start;
+    }
+
+    &__alert-icon {
+        color: #f59e0b;
+        flex-shrink: 0;
+    }
+
+    &__alert-content {
+        flex: 1;
+        @include flex-column;
+        gap: $spacing-sm;
+    }
+
+    &__alert-title {
+        font-weight: bold;
+        font-size: 16px;
+        color: #92400e;
+    }
+
+    &__alert-description {
+        font-size: 13px;
+        color: #78350f;
+        line-height: 1.5;
+    }
+
+    &__alert-button {
+        @include button-reset;
+        background-color: #f59e0b;
+        color: white;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $radius-lg;
+        font-weight: bold;
+        font-size: 14px;
+        @include flex-center;
+        gap: $spacing-xs;
+        align-self: flex-start;
+        @include transition(all);
+        margin-top: $spacing-xs;
+
+        &:hover {
+            background-color: #d97706;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    // 섹션
+    &__section {
+        margin-bottom: $spacing-xl;
+    }
+
+    &__description {
+        color: $color-text-secondary;
+        line-height: 1.6;
+        font-size: 14px;
+    }
+
+    &__section-title {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: $spacing-xs;
+        @include flex-center;
+        justify-content: flex-start;
+        gap: $spacing-sm;
+        color: $color-primary;
+    }
+
+    &__download-button {
+        @include button-reset;
+        background-color: $color-primary;
+        color: white;
+        padding: $spacing-xs $spacing-md;
+        border-radius: $radius-lg;
+        font-weight: bold;
+        font-size: 13px;
+        @include flex-center;
+        gap: $spacing-xs;
+        @include transition(all);
+
+        &:hover:not(:disabled) {
+            background-color: #ec4899;
+        }
+
+        &:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        &--image {
+            width: 100%;
+            max-width: 280px;
+            height: 44px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 100%);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            color: $color-primary;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            font-size: 14px;
+            font-weight: 600;
+
+            &:hover:not(:disabled) {
+                background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+                border-color: rgba(236, 72, 153, 0.4);
+                box-shadow: 0 6px 16px rgba(236, 72, 153, 0.15);
+                transform: translateY(-1px);
+            }
+
+            &:active:not(:disabled) {
+                transform: translateY(0);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+
+            &:disabled {
+                background: rgba(255, 255, 255, 0.5);
+                color: #9ca3af;
+                border-color: transparent;
+            }
+        }
+    }
+
+    &__palette-description {
+        font-size: 12px;
+        color: $color-text-secondary;
+        margin-bottom: $spacing-md;
+    }
+
+    // 컬러 팔레트
+    &__palette {
+        @include flex-center;
+        justify-content: flex-start;
+        gap: $spacing-sm;
+    }
+
+    &__color-chip {
+        width: 48px;
+        height: 48px;
+        border-radius: $radius-full;
+        box-shadow: $shadow-md;
+        border: 2px solid $color-background;
+        box-shadow: 0 0 0 1px $color-border;
+        @include transition(all);
+        cursor: pointer;
+        position: relative;
+
+        &:hover {
+            transform: scale(1.1);
+        }
+
+        &--active {
+            border: 3px solid $color-primary;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3), $shadow-md;
+            transform: scale(1.15);
+
+            &::after {
+                content: '✓';
+                position: absolute;
+                inset: 0;
+                @include flex-center;
+                color: white;
+                font-weight: bold;
+                font-size: 20px;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            }
+        }
+    }
+
+    // Best / Worst 추천
+    &__recommendations {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: $spacing-md;
+        margin-bottom: $spacing-xl;
+    }
+
+    &__recommendation {
+        padding: $spacing-md;
+        border-radius: $radius-xl;
+        background-color: $color-surface;
+        border: 1px solid $color-border;
+
+        &--best {
+            border-color: $color-primary;
+        }
+    }
+
+    &__recommendation-title {
+        font-weight: bold;
+        margin-bottom: $spacing-sm;
+        font-size: 14px;
+        @include flex-center;
+        justify-content: flex-start;
+        gap: $spacing-xs;
+    }
+
+    &__recommendation--worst &__recommendation-title {
+        color: #9ca3af;
+    }
+
+    &__recommendation-list {
+        font-size: 12px;
+        color: $color-text-secondary;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    &__recommendation--worst &__recommendation-list {
+        color: #9ca3af;
+    }
+
+    &__recommendation-item {
+        line-height: 1.4;
+    }
+
+    // 액션 버튼
+    &__actions {
+        margin-top: auto;
+        padding-bottom: $spacing-md;
+    }
+
+    &__retry-button {
+        @include button-reset;
+        width: 100%;
+        padding: $spacing-md 0;
+        background-color: #111827;
+        color: $color-background;
+        border-radius: $radius-lg;
+        font-weight: bold;
+        font-size: 18px;
+        box-shadow: $shadow-lg;
+        @include flex-center;
+        gap: $spacing-sm;
+        @include transition(all);
+
+        &:hover {
+            background-color: #000000;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+}

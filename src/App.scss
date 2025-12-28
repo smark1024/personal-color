@@ -1,0 +1,57 @@
+@use "./styles/variables" as *;
+@use "./styles/mixins" as *;
+
+.app {
+    height: 100%;
+    background-color: $color-surface;
+    @include flex-center;
+    padding: 0;
+
+    @include desktop {
+        padding: $spacing-lg 0;
+    }
+
+    &__container {
+        width: 100%;
+        max-width: 448px;
+        height: 100vh;
+        background-color: $color-background;
+        box-shadow: $shadow-2xl;
+        overflow: hidden;
+        position: relative;
+        transform: translateZ(0);
+
+        @include desktop {
+            height: 800px;
+            border-radius: 30px;
+        }
+
+        // React Router 컴포넌트들도 높이 상속
+        > * {
+            height: 100%;
+        }
+    }
+
+    // 로딩 상태
+    &__loading {
+        position: absolute;
+        inset: 0;
+        @include flex-column;
+        justify-content: center;
+        align-items: center;
+        background-color: $color-background;
+        z-index: $z-index-overlay;
+    }
+
+    &__loading-spinner {
+        color: $color-primary;
+        margin-bottom: $spacing-md;
+    }
+
+    &__loading-text {
+        color: #9ca3af;
+        font-size: 14px;
+        font-weight: 500;
+    }
+}
+
